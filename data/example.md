@@ -119,13 +119,20 @@ Also a separator v
 
 **starry bold**
 
-__dunder bold__
-
 *starry italic*
 
 _underscored italic_
 
 ~~strikethrough~~
+
+__underlined__
+
+_multiline
+italic_
+
+**not bold **
+
+** not bold**
 
 ---
 
