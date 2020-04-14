@@ -1,16 +1,8 @@
 from parser import Tokenizer
+from spec import Spec, SpecBuilder
 
-keywords = {'IF', 'THEN', 'ENDIF', 'FOR', 'NEXT', 'GOSUB', 'RETURN'}
-token_specification = [
-    ('NUMBER',   r'\d+(\.\d*)?'),  # Integer or decimal number
-    ('ASSIGN',   r':='),           # Assignment operator
-    ('END',      r';'),            # Statement terminator
-    ('ID',       r'[A-Za-z]+'),    # Identifiers
-    ('OP',       r'[+\-*/]'),      # Arithmetic operators
-    ('NEWLINE',  r'\n'),           # Line endings
-    ('SKIP',     r'[ \t]+'),       # Skip over spaces and tabs
-    ('MISMATCH', r'.'),            # Any other character
-]
+spec = SpecBuilder('./data/md.spec').get_spec()
+print(spec)
 
 statements = '''
     IF quantity THEN
@@ -19,7 +11,7 @@ statements = '''
     ENDIF;
 '''
 
-tokenizer = Tokenizer(keywords, token_specification)
+tokenizer = Tokenizer(spec)
 
 for token in tokenizer.tokenize(statements):
     print(token)

@@ -1,4 +1,5 @@
 import re
+from spec import Spec
 
 
 class Token:
@@ -13,12 +14,11 @@ class Token:
 
 
 class Tokenizer:
-    def __init__(self, keywords: set, token_map: list):
-        self._keywords = keywords
-        self._token_map = token_map
+    def __init__(self, spec: Spec):
+        self._spec = spec
 
     def tokenize(self, code: str):
-        tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in self._token_map)
+        tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in self._spec.get_tokens())
         line_num = 1
         line_start = 0
         for mo in re.finditer(tok_regex, code):
@@ -27,7 +27,7 @@ class Tokenizer:
             column = mo.start() - line_start
             if kind == 'NUMBER':
                 value = float(value) if '.' in value else int(value)
-            elif kind == 'ID' and value in self._keywords:
+            elif kind == 'ID' and self._spec.is_keyword(value):
                 kind = value
             elif kind == 'NEWLINE':
                 line_start = mo.end()
