@@ -1,0 +1,4 @@
+IF quantity THEN
+    total := total + price * quantity;
+    tax := price * 0.05;
+ENDIF
