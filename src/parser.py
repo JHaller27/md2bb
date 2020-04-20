@@ -3,6 +3,8 @@ from src.spec import Spec
 
 
 class Token:
+    KEYWORD = 'KEYWORD'
+
     def __init__(self, name: str, value: str, line: int, column: int):
         self._name = name
         self._value = value
@@ -25,16 +27,13 @@ class Tokenizer:
             kind = match_obj.lastgroup
             value = match_obj.group()
             column = match_obj.start() - line_start
-            if kind == 'NUMBER':
-                value = float(value) if '.' in value else int(value)
-            elif kind == 'ID' and self._spec.is_keyword(value):
-                kind = value
-            elif kind == Spec.NEWLINE:
+            if kind == Spec.NEWLINE:
                 line_start = match_obj.end()
                 line_num += 1
                 continue
-            elif kind == 'SKIP':
-                continue
             elif kind == Spec.MISMATCH:
                 raise RuntimeError(f'{value!r} unexpected on line {line_num}')
+            elif self._spec.is_keyword(value):
+                kind = Token.KEYWORD
+
             yield Token(kind, value, line_num, column)
