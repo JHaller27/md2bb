@@ -29,7 +29,7 @@ class Tokenizer:
                 value = float(value) if '.' in value else int(value)
             elif kind == 'ID' and self._spec.is_keyword(value):
                 kind = value
-            elif kind == 'NEWLINE':
+            elif kind == Spec.NEWLINE:
                 line_start = match_obj.end()
                 line_num += 1
                 continue

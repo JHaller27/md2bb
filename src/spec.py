@@ -23,6 +23,7 @@ def next_line(file_iter) -> str:
 
 class Spec:
     MISMATCH = 'MISMATCH'
+    NEWLINE = 'NEWLINE'
 
     def __init__(self):
         self._keywords = set()
@@ -192,6 +193,8 @@ class _ParseTokens(_BuilderState):
 class _AddDefaultTokens(_BuilderState):
     def run(self) -> _BuilderState:
         self._spec.add_token(Spec.MISMATCH, r'.')
+        self._spec.add_token(Spec.NEWLINE, r'\n')
+
         return _Cleanup(self._context)
 
 

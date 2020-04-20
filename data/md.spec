@@ -28,10 +28,6 @@ ID
 OP
 [+\-*/]
 
-# Line endings
-NEWLINE
-\n
-
 # Skip over spaces and tabs
 SKIP
 [ \t]+
