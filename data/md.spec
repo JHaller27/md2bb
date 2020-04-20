@@ -35,7 +35,3 @@ NEWLINE
 # Skip over spaces and tabs
 SKIP
 [ \t]+
-
-# Any other character
-MISMATCH
-.

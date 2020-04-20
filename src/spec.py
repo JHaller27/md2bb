@@ -22,6 +22,8 @@ def next_line(file_iter) -> str:
 
 
 class Spec:
+    MISMATCH = 'MISMATCH'
+
     def __init__(self):
         self._keywords = set()
         self._tokens = []
@@ -167,7 +169,7 @@ class _ParseTokens(_BuilderState):
 
         # If end of section, continue to next state
         if token_id is None or token_id.startswith(SECTION_TERM):
-            return _Cleanup(self._context)
+            return _AddDefaultTokens(self._context)
 
         # If token identifier is not valid (doesn't match regex), then error
         if self.REGEX.match(token_id) is None:
@@ -185,6 +187,12 @@ class _ParseTokens(_BuilderState):
         self._spec.add_token(token_id, token_regex)
 
         return self
+
+
+class _AddDefaultTokens(_BuilderState):
+    def run(self) -> _BuilderState:
+        self._spec.add_token(Spec.MISMATCH, r'.')
+        return _Cleanup(self._context)
 
 
 class _Error(_BuilderState):

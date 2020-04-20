@@ -35,6 +35,6 @@ class Tokenizer:
                 continue
             elif kind == 'SKIP':
                 continue
-            elif kind == 'MISMATCH':
+            elif kind == Spec.MISMATCH:
                 raise RuntimeError(f'{value!r} unexpected on line {line_num}')
             yield Token(kind, value, line_num, column)
