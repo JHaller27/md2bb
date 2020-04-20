@@ -1,5 +1,5 @@
 import re
-from spec import Spec
+from src.spec import Spec
 
 
 class Token:

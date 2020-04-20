@@ -1,5 +1,5 @@
-from parser import Tokenizer
-from spec import Spec, SpecBuilder
+from src.parser import Tokenizer
+from src.spec import Spec, SpecBuilder
 import argparse
 
 
