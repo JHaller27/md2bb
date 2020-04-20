@@ -21,16 +21,16 @@ class Tokenizer:
         tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in self._spec.get_tokens())
         line_num = 1
         line_start = 0
-        for mo in re.finditer(tok_regex, code):
-            kind = mo.lastgroup
-            value = mo.group()
-            column = mo.start() - line_start
+        for match_obj in re.finditer(tok_regex, code):
+            kind = match_obj.lastgroup
+            value = match_obj.group()
+            column = match_obj.start() - line_start
             if kind == 'NUMBER':
                 value = float(value) if '.' in value else int(value)
             elif kind == 'ID' and self._spec.is_keyword(value):
                 kind = value
             elif kind == 'NEWLINE':
-                line_start = mo.end()
+                line_start = match_obj.end()
                 line_num += 1
                 continue
             elif kind == 'SKIP':
